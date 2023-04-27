@@ -1,0 +1,22 @@
+module aludec(input [2:0] cond,
+              input [4:0] aluop,
+              input sf ,
+              input [2:0] Rt,RD, Rs,
+              
+              output reg [2:0] alucontrol);
+  always @( * )
+    case(aluop)
+      3'b000: alucontrol <= 3'b010; // add
+      3'b001: alucontrol <= 3'b010; // sub
+      3'b010: 
+        case(cond)6'b100000: 
+        alucontrol <= 3'b010; // ADD
+          6'b100010: alucontrol <= 3'b110; // SUB
+          6'b100100: alucontrol <= 3'b000; // AND
+         
+          6'b101010: alucontrol <= 3'b111; // SLT
+          default: alucontrol <= 3'bxxx; // ???
+          endcase
+      default: alucontrol <= 3'bxxx; // ???
+      endcase
+endmodule

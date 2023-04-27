@@ -1,0 +1,4 @@
+module signext(input [9:0] a, 
+               output [23:0] y);
+  assign y = {{10{a[9]}}, a};
+endmodule

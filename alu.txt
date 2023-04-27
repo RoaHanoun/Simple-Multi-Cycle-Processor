@@ -1,0 +1,68 @@
+module alu(input [4:0] op,
+           input [1:0] cond,          
+           input [23:0] input1,input2,imm,
+  input sf,pc ,
+           output reg zf,
+  output reg [23:0] result); 
+  always @( * )
+    if(cond ==  2'b00 )begin
+      if(op ==5'b00000)begin//and
+          result = input1 & input2;
+      end
+  else if (op == 5'b00001)begin // max
+       result = (input1>input2)? input1 : input2;	
+	end
+      else if(op ==5'b00010) begin //lws
+        result = input1+input2;
+
+	end
+      else if(op ==5'b00011) begin //add
+	      result = input1 + input2;
+
+	end
+      else if(op ==5'b00100) begin //sub
+	  result = input1 - input2;
+
+	end
+      else if(op ==5'b00101) begin //CMP
+        zf = (input1 < input2)? 1: 0;
+       
+	
+	end
+      else if(op ==5'b00110) begin //jr
+		zf = input1;
+		
+	end
+      else if (sf == 0 && op == 5'b00011)begin 
+        result = input1 - input2;
+      end
+	
+  end 
+     
+      // RTYPE instruction use the 5-bit op field of instruction to specify ALU operation
+  else if(cond == 2'b01)begin 
+    if(sf== 1 )begin
+          if(op ==5'b00111 ) begin //ANDI
+	          result = input1 & imm;
+          end
+          else if(op ==5'b01000) begin //ADDI
+        result = input1 + imm;
+       
+      end 
+          else if(op ==5'b01011) begin //beq
+          zf = (input1 == input2)? 1: 0;
+          end 
+          else if(op ==5'b01011) begin
+            
+          end
+          
+        end
+      else 
+        result = 0 ;
+
+  end
+     // 3'b10: 
+        
+     // default: alucontrol <= 3'bxxx; // ???
+    //  endcase
+endmodule

@@ -1,0 +1,7 @@
+module topmulti(input clk, reset,
+                output [23:0] writedata, adr,
+                output memwrite);
+  wire [23:0] readdata;// instantiate processor and memory
+  mips mips(clk, reset, adr, writedata, memwrite, readdata);
+  mem mem(clk, memwrite, adr, writedata, readdata);
+endmodule

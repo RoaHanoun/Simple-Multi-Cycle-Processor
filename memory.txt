@@ -1,0 +1,23 @@
+module mem(input clk, we, 
+           input [23:0] a, wd, 
+           output [23:0] rd); 
+  reg [23:0] RAM[46:0]; 
+initial 
+begin 
+  RAM[0] <= 23'h20020005; 
+  RAM[1] <= 23'h2003000c; 
+  RAM[2] <= 23'h2067fff7; 
+  RAM[3] <= 23'h00e22025; 
+  RAM[4] <= 23'h00642824; 
+  RAM[5] <= 23'h00a42820; 
+  RAM[6] <= 23'h10a7000a; 
+  RAM[7] <= 23'h0064202a; 
+  RAM[8] <= 23'h10800001; 
+  RAM[9] <= 23'h20050000; 
+ 
+ end 
+  assign rd = RAM[a[23:2]]; // word aligned 
+always @(posedge clk) 
+if (we) 
+  RAM[a[23:2]] <= wd; 
+endmodule 
